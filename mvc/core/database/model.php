@@ -17,33 +17,26 @@ abstract class model
         $INSERT=FALSE;
         if ($this->id != '') {
             $sql = $this->update();
-            echo 'in update';
+            //echo 'in update';
         } else {
+            $db = dbConn::getConnection();
+        
+            $this->id = $db->lastInsertId();
             $sql = $this->insert();
+            $statement = $db->prepare($sql);
+            //echo 'jj';
             $INSERT = TRUE;
         }
-        $db = dbConn::getConnection();
-        $statement = $db->prepare($sql);
-        $array = get_object_vars($this);
-
-        if ($INSERT == TRUE) {
-
-            unset($array['id']);
-
-        }
-
-        foreach (array_flip($array) as $key => $value) {
-            $statement->bindParam(":$value", $this->$value);
-        }
+        
+        
+        
+        
+        
         $statement->execute();
-        if ($INSERT == TRUE) {
-
-            $this->id = $db->lastInsertId();
-
-        }
+       
 
 
-        return $this->id;
+        //return $this->id;
         }
 
 
@@ -54,9 +47,11 @@ abstract class model
         $modelName = static::$modelName;
         $tableName = $modelName::getTablename();
         $array = get_object_vars($this);
-        unset($array['id']);
+        array_pop($array);
+        print_r($array);
+        //unset($array['id']);
         $columnString = implode(',', array_flip($array));
-        $valueString = ':' . implode(',:', array_flip($array));
+        $valueString = implode(',', array_flip($array));
         $sql = 'INSERT INTO ' . $tableName . ' (' . $columnString . ') VALUES (' . $valueString . ')';
         return $sql;
     }

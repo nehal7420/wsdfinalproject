@@ -19,7 +19,6 @@
 <h1>Tasks:</h1>
 
 <?php
-
 include "header.php";
 ?>
 
@@ -35,17 +34,16 @@ include "header.php";
 
  <?php
 //this is how you print something
-        if($data == false){
-            echo '<h3>You did not create any Task</h3>';
-        }else {
-            print utility\htmlTable::genarateTableFromMultiArray($data);
-        }
-
-    ?
-
+       //if(!empty($data)){
+         //   print utility\htmlTable::genarateTableFromMultiArray($data);
+        //}
+        
+        print_r($data);
+    ?>
 
 
-<form action="index.php?page=tasks&action=insert" method="post">
+
+<form action="index.php?page=tasks&action=save&id=" method="post">
 
     
     Owneremail: <input type="text" name="owneremail" ><br>

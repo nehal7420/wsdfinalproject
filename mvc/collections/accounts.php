@@ -14,6 +14,7 @@ class accounts extends \database\collection
             $tableName = get_called_class();
             $sql = 'SELECT * FROM ' . $tableName . ' WHERE email = ?';
 
+         echo $sql;
          //grab the only record for find one and return as an object
             $recordsSet = self::getResults($sql, $email);
 
